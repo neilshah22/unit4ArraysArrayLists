@@ -39,7 +39,8 @@ public class Radar
         //
         // !!! add code here !!!
         //
-        
+        currentScan = new boolean[rows][cols];
+        accumulator = new int[rows][cols];
         
         // randomly set the location of the monster (can be explicity set through the
         //  setMonsterLocation method for the unit test
@@ -67,8 +68,27 @@ public class Radar
         //
         // !!! add code here !!!
         //
+        for(int i = 0; i < currentScan.length; i++)
+        {
+            for(int j = 0; j < currentScan[i].length; j++)
+            {
+                this.currentScan[i][j] = false; 
+            }
+        }
+        this.setMonsterLocation(monsterLocationRow, monsterLocationCol);
+        this.injectNoise(); 
         
-        
+        for( int i = 0; i < currentScan.length; i++)
+        {
+            for (int j = 0; j < currentScan[i].length; j++)
+            {
+              if(this.currentScan[i][j])
+              {
+                  this.accumulator[i][j]++;
+              }
+            }
+        }
+        numScans++;
     }
 
     /**
@@ -170,7 +190,17 @@ public class Radar
         //
         // !!! add code here !!!
         //
-        
+        for(int i = 0; i < currentScan.length; i++)
+        {
+            for(int j = 0; j < currentScan[i].length; j++)
+            { 
+                if (Math.random() <= this.noiseFraction)
+                {
+                    currentScan[i][j] = true;
+                }
+            }
+        }
+
         
     }
     
